@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Todo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Todo Details</h1>
+        <div id="todo-details">
+        </div>
+        <div class="todo-actions">
+            <button id="toggleBtn" class="btn"></button>
+            <a href="edit.html?id=${id}" class="btn btn-warning">Edit</a>
+            <a href="delete.html?id=${id}" class="btn btn-danger">Delete</a>
+        </div>
+        <a href="index.html" class="back-link">Back to List</a>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = parseInt(urlParams.get('id'));
+        const todo = getTodoById(id);
+        if (todo) {
+            document.getElementById('todo-details').innerHTML = `
+                <h2>${todo.title}</h2>
+                <p>${todo.description}</p>
+                <p>Status: ${todo.completed ? 'Completed' : 'Pending'}</p>
+            `;
+            const toggleBtn = document.getElementById('toggleBtn');
+            toggleBtn.textContent = todo.completed ? 'Mark Incomplete' : 'Mark Complete';
+            toggleBtn.className = `btn ${todo.completed ? 'btn-secondary' : 'btn-success'}`;
+            toggleBtn.addEventListener('click', function() {
+                toggleComplete(id);
+                window.location.href = 'index.html';
+            });
+        }
+    </script>
+</body>
+</html>

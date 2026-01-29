@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Todo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Delete Todo</h1>
+        <p>Are you sure you want to delete this todo?</p>
+        <div id="todo-summary">
+        </div>
+        <button id="deleteBtn" class="btn btn-danger">Yes, Delete</button>
+        <a href="index.html" class="back-link">Cancel</a>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = parseInt(urlParams.get('id'));
+        const todo = getTodoById(id);
+        if (todo) {
+            document.getElementById('todo-summary').innerHTML = `
+                <h2>${todo.title}</h2>
+                <p>${todo.description}</p>
+            `;
+        }
+        document.getElementById('deleteBtn').addEventListener('click', function() {
+            deleteTodo(id);
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

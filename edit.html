@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Todo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Todo</h1>
+        <form id="edit-form">
+            <label for="title">Title:</label>
+            <input type="text" id="title" required>
+            <label for="description">Description:</label>
+            <textarea id="description"></textarea>
+            <label for="completed">Completed:</label>
+            <input type="checkbox" id="complete">
+            <button type="submit" class="btn">Update Todo</button>
+        </form>
+        <a href="index.html" class="back-link">Back to List</a>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = parseInt(urlParams.get('id'));
+        const todo = getTodoById(id);
+        if (todo) {
+            document.getElementById('title').value = todo.title;
+            document.getElementById('description').value = todo.description;
+            document.getElementById('complete').checked = todo.completed;
+        }
+        document.getElementById('edit-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const completed = document.getElementById('complete').checked;
+            updateTodo(id, title, description, completed);
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
